@@ -50,7 +50,7 @@ export default function Contact({ email, socials }: Props) {
           <div data-reveal style={{ '--reveal-delay': '120ms' } as React.CSSProperties}>
             <p
               style={{
-                font: "400 19px/30px 'Poppins', sans-serif",
+                font: "400 16px/26px 'Poppins', sans-serif",
                 color: 'var(--text-primary)',
                 margin: '0 0 32px',
               }}
@@ -84,7 +84,7 @@ export default function Contact({ email, socials }: Props) {
                 </div>
                 <div
                   style={{
-                    font: "500 22px/28px 'Poppins', sans-serif",
+                    font: "500 18px/24px 'Poppins', sans-serif",
                     color: 'var(--text-bright)',
                   }}
                 >

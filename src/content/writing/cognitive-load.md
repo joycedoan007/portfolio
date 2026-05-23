@@ -4,6 +4,14 @@ date: "2026-01-15"
 readTime: 8 min read
 description: The most expensive pixel in a dashboard is the one that makes someone think when they didn't need to.
 notionUrl: https://joycedoan.notion.site/cognitive-load
+category: Dashboard design
+tocGroups:
+  - label: The problem
+    slugs: [the-weight-of-invisible-work]
+  - label: Design strategies
+    slugs: [hierarchy-is-the-primary-tool, progressive-disclosure, the-cost-of-choice]
+  - label: Mindset
+    slugs: [what-removal-teaches-you]
 ---
 
 Dashboards are a kind of organized anxiety. They exist because someone, somewhere, needed to track something — and then that something multiplied. Before long you have forty metrics, three date pickers, and a filter panel that requires a manual to operate. The dashboard ships. The users stare at it. Nobody feels informed.

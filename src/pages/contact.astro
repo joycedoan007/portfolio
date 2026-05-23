@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle';
+import Contact from '../components/Contact';
+import '../styles/global.css';
+
+const SITE = {
+  email: 'joycedoan.007@gmail.com',
+  socials: [
+    { label: 'LinkedIn', icon: 'linkedin-logo', href: 'https://linkedin.com/in/joycedoan007' },
+    { label: 'X', icon: 'x-logo', href: 'https://x.com/joycedoan007' },
+    { label: 'Instagram', icon: 'instagram-logo', href: 'https://instagram.com/joycedoan007' },
+    { label: 'Notion', icon: 'notion-logo', href: 'https://joycedoan.notion.site' },
+  ],
+};
+---
+
+<Layout title="Contact — Joyce Doan" description="Get in touch with Joyce Doan, UI/UX designer.">
+  <header style="position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg-page) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle);">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 48px; height: 48px; display: flex; align-items: center; justify-content: space-between;">
+      <a href="/" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+        <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+        <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
+        <span style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary);">Contact</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <a href="/work" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Work</a>
+        <a href="/writing" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Writing</a>
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </header>
+
+  <Contact client:load email={SITE.email} socials={SITE.socials} />
+</Layout>

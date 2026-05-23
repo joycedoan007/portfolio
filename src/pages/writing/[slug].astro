@@ -18,7 +18,18 @@ const allEntries = await getCollection('writing');
 const sorted = allEntries.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+
+// Group articles by category, preserving insertion order
+const categoryOrder: string[] = [];
+const grouped: Record<string, typeof sorted> = {};
+for (const e of sorted) {
+  const cat = e.data.category ?? 'Other';
+  if (!grouped[cat]) { grouped[cat] = []; categoryOrder.push(cat); }
+  grouped[cat].push(e);
+}
 const h2s = headings.filter((h) => h.depth === 2);
+const tocGroups = entry.data.tocGroups;
+const headingMap = Object.fromEntries(h2s.map((h) => [h.slug, h.text]));
 
 function fmtDate(d: string) {
   return new Date(d).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
@@ -52,54 +63,63 @@ function fmtDate(d: string) {
     <aside
       style="position: sticky; top: 48px; height: calc(100vh - 48px); overflow-y: auto; border-right: 1px solid var(--border-subtle); padding: 32px 0;"
     >
-      <!-- Back to home -->
-      <div style="padding: 0 20px 24px;">
-        <a
-          href="/"
-          style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text-secondary); font: 500 12px/16px 'JetBrains Mono', monospace; transition: color 150ms ease;"
-          class="sidebar-back"
-        >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0;">
-            <path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Portfolio
-        </a>
-      </div>
-
-      <!-- Section label -->
-      <div
-        style="padding: 0 20px 12px; font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled); letter-spacing: 0.08em; text-transform: uppercase;"
-      >
-        Writing
-      </div>
-
-      <!-- Article list -->
+      <!-- Grouped article list -->
       <nav>
         {
-          sorted.map((e) => {
-            const isActive = e.slug === entry.slug;
+          categoryOrder.map((cat) => {
+            const hasActive = grouped[cat].some((e) => e.slug === entry.slug);
+            const catId = cat.toLowerCase().replace(/[^a-z0-9]/g, '-');
             return (
-              <a
-                href={`/writing/${e.slug}`}
-                style={`
-                  display: block;
-                  padding: 8px 20px;
-                  text-decoration: none;
-                  border-left: 2px solid ${isActive ? 'var(--primary-500)' : 'transparent'};
-                  background: ${isActive ? 'var(--bg-surface)' : 'transparent'};
-                  transition: background 150ms ease;
-                `}
-                class={isActive ? '' : 'sidebar-link'}
-              >
-                <div
-                  style={`font: ${isActive ? '500' : '400'} 13px/18px 'Poppins', sans-serif; color: ${isActive ? 'var(--text-bright)' : 'var(--text-secondary)'}; margin-bottom: 2px; transition: color 150ms ease;`}
+              <>
+                <button
+                  data-cat-toggle={catId}
+                  aria-expanded={hasActive ? 'true' : 'false'}
+                  style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: none; border: none; cursor: pointer; text-align: left;"
+                  class="cat-toggle"
                 >
-                  {e.data.title}
+                  <span style="font: 500 12px/16px 'Poppins', sans-serif; color: var(--text-secondary); letter-spacing: 0.01em;">
+                    {cat}
+                  </span>
+                  <svg
+                    data-cat-chevron={catId}
+                    width="12" height="12" viewBox="0 0 12 12" fill="none"
+                    style={`flex-shrink: 0; transition: transform 200ms ease; transform: rotate(${hasActive ? '90deg' : '0deg'});`}
+                  >
+                    <path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <div
+                  data-cat-items={catId}
+                  style={`overflow: hidden; transition: max-height 200ms ease; max-height: ${hasActive ? '600px' : '0px'};`}
+                >
+                  {grouped[cat].map((e) => {
+                    const isActive = e.slug === entry.slug;
+                    return (
+                      <a
+                        href={`/writing/${e.slug}`}
+                        style={`
+                          display: block;
+                          padding: 7px 20px;
+                          text-decoration: none;
+                          border-left: 2px solid ${isActive ? 'var(--primary-500)' : 'transparent'};
+                          background: ${isActive ? 'var(--bg-surface)' : 'transparent'};
+                          transition: background 150ms ease;
+                        `}
+                        class={isActive ? '' : 'sidebar-link'}
+                      >
+                        <div
+                          style={`font: ${isActive ? '500' : '400'} 13px/18px 'Poppins', sans-serif; color: ${isActive ? 'var(--text-bright)' : 'var(--text-secondary)'}; margin-bottom: 2px; transition: color 150ms ease;`}
+                        >
+                          {e.data.title}
+                        </div>
+                        <div style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">
+                          {fmtDate(e.data.date)} · {e.data.readTime}
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
-                <div style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">
-                  {fmtDate(e.data.date)} · {e.data.readTime}
-                </div>
-              </a>
+              </>
             );
           })
         }
@@ -126,20 +146,10 @@ function fmtDate(d: string) {
         <Content />
       </div>
 
-      <!-- Footer: Notion link -->
+      <!-- Footer -->
       <div
         style="margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 12px;"
       >
-        <a
-          href={entry.data.notionUrl}
-          target="_blank"
-          rel="noopener"
-          style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-full); border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-bright); text-decoration: none; font: 500 13px/20px 'Poppins', sans-serif; transition: border-color 150ms ease;"
-        >
-          <i class="ph ph-notion-logo" style="font-size: 16px;"></i>
-          Read on Notion
-          <i class="ph-bold ph-arrow-up-right" style="font-size: 12px;"></i>
-        </a>
         <a
           href="/"
           style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-full); border: 1px solid var(--border-subtle); color: var(--text-secondary); text-decoration: none; font: 500 13px/20px 'Poppins', sans-serif; transition: color 150ms ease;"
@@ -162,16 +172,36 @@ function fmtDate(d: string) {
               On this page
             </div>
             <nav id="toc-nav">
-              {h2s.map((h) => (
-                <a
-                  href={`#${h.slug}`}
-                  data-toc={h.slug}
-                  style="display: block; padding: 5px 0; font: 400 12px/18px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none; border-left: 2px solid transparent; padding-left: 12px; margin-left: -12px; transition: color 150ms ease, border-color 150ms ease;"
-                  class="toc-link"
-                >
-                  {h.text}
-                </a>
-              ))}
+              {tocGroups ? (
+                tocGroups.map((group) => (
+                  <div style="margin-bottom: 20px;">
+                    <div style="font: 500 12px/16px 'Poppins', sans-serif; color: var(--text-primary); margin-bottom: 4px;">
+                      {group.label}
+                    </div>
+                    {group.slugs.map((slug) => headingMap[slug] && (
+                      <a
+                        href={`#${slug}`}
+                        data-toc={slug}
+                        style="display: block; padding: 4px 0; font: 400 12px/18px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none; border-left: 2px solid transparent; padding-left: 12px; margin-left: -12px; transition: color 150ms ease, border-color 150ms ease;"
+                        class="toc-link"
+                      >
+                        {headingMap[slug]}
+                      </a>
+                    ))}
+                  </div>
+                ))
+              ) : (
+                h2s.map((h) => (
+                  <a
+                    href={`#${h.slug}`}
+                    data-toc={h.slug}
+                    style="display: block; padding: 5px 0; font: 400 12px/18px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none; border-left: 2px solid transparent; padding-left: 12px; margin-left: -12px; transition: color 150ms ease, border-color 150ms ease;"
+                    class="toc-link"
+                  >
+                    {h.text}
+                  </a>
+                ))
+              )}
             </nav>
           </>
         )
@@ -185,7 +215,7 @@ function fmtDate(d: string) {
   .prose {
     max-width: 660px;
     color: var(--text-primary);
-    font: 400 17px/28px 'Poppins', sans-serif;
+    font: 400 15px/24px 'Poppins', sans-serif;
   }
   .prose h2 {
     font: 600 24px/1.2 'Poppins', sans-serif;
@@ -279,6 +309,9 @@ function fmtDate(d: string) {
   .sidebar-back:hover {
     color: var(--text-primary) !important;
   }
+  .cat-toggle:hover span {
+    color: var(--text-bright) !important;
+  }
   .toc-link:hover {
     color: var(--text-bright) !important;
   }
@@ -287,6 +320,21 @@ function fmtDate(d: string) {
     border-left-color: var(--primary-500) !important;
   }
 </style>
+
+<script>
+  // Category accordion
+  document.querySelectorAll<HTMLButtonElement>('[data-cat-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.catToggle!;
+      const items = document.querySelector<HTMLElement>(`[data-cat-items="${id}"]`);
+      const chevron = document.querySelector<SVGElement>(`[data-cat-chevron="${id}"]`);
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (items) items.style.maxHeight = isOpen ? '0px' : '600px';
+      if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+    });
+  });
+</script>
 
 <script>
   // TOC scrollspy

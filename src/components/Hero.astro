@@ -8,23 +8,13 @@ const { stats, company } = Astro.props;
 
 <section id="top" style="border-bottom: 1px solid var(--border-subtle);">
   <div style="max-width: 1320px; margin: 0 auto; padding: 64px 48px 48px;">
-    <!-- Eyebrow row -->
-    <div
-      style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 32px; margin-bottom: 56px; border-bottom: 1px solid var(--border-subtle); font: 500 12px/16px 'JetBrains Mono', monospace; color: var(--text-secondary);"
-    >
-      <span>Portfolio · 2022 — 2026</span>
-      <span>Edition 04</span>
-      <span>San Francisco / Remote</span>
-      <span id="hero-date"></span>
-    </div>
-
     <!-- Name + info grid -->
     <div style="display: grid; grid-template-columns: 1fr 320px; gap: 64px; align-items: flex-end;">
       <!-- Big name -->
       <div data-reveal>
         <div class="overline" style="margin-bottom: 24px;">UI/UX Designer · {company}</div>
         <h1
-          style="font: 500 clamp(96px, 13.5vw, 200px)/0.86 'Poppins', sans-serif; letter-spacing: -0.05em; color: var(--text-bright); margin: 0; text-wrap: balance;"
+          style="font: 500 clamp(72px, 10vw, 160px)/0.86 'Poppins', sans-serif; letter-spacing: -0.05em; color: var(--text-bright); margin: 0; text-wrap: balance;"
         >
           Joyce<br />Doan<span style="color: var(--text-accent);">.</span>
         </h1>
@@ -34,7 +24,7 @@ const { stats, company } = Astro.props;
       <div data-reveal style="--reveal-delay: 120ms;">
         <div style="display: flex; flex-direction: column; gap: 24px; padding-bottom: 12px;">
           <p
-            style="font: 400 16px/26px 'Poppins', sans-serif; color: var(--text-primary); margin: 0;"
+            style="font: 400 14px/22px 'Poppins', sans-serif; color: var(--text-primary); margin: 0;"
           >
             Designs dashboards and complex interfaces where clarity matters more than decoration.
             Currently exploring the intersection of AI, UX, and product design.
@@ -64,7 +54,7 @@ const { stats, company } = Astro.props;
             <a
               href="#work"
               data-cursor="hover"
-              style="flex: 1; height: 44px; padding: 10px 16px; background: var(--primary-500); color: var(--text-inverse); border-radius: var(--radius-md); font: 600 14px/20px 'Poppins', sans-serif; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
+              style="flex: 1; height: 44px; padding: 10px 16px; background: var(--primary-700); color: var(--text-inverse); border-radius: var(--radius-md); font: 600 14px/20px 'Poppins', sans-serif; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"
             >
               See the work <i class="ph-bold ph-arrow-right" style="font-size: 14px;"></i>
             </a>
@@ -106,14 +96,3 @@ const { stats, company } = Astro.props;
     </div>
   </div>
 </section>
-
-<script>
-  const el = document.getElementById('hero-date');
-  if (el) {
-    el.textContent = new Date().toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    });
-  }
-</script>

@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ThemeToggle from '../components/ThemeToggle';
+import '../styles/global.css';
+---
+
+<Layout title="About — Joyce Doan" description="UI/UX designer focused on data-driven products, dashboards, and complex interfaces.">
+  <header style="position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg-page) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle);">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 48px; height: 48px; display: flex; align-items: center; justify-content: space-between;">
+      <a href="/" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+        <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+        <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
+        <span style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary);">About</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <a href="/work" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Work</a>
+        <a href="/writing" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Writing</a>
+        <a href="/contact" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Contact</a>
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MY JOURNEY ── -->
+  <section style="border-bottom: 1px solid var(--border-subtle);">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 96px 48px;">
+      <div class="overline" style="margin-bottom: 12px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle);">Experience</div>
+      <h2 style="font: 500 64px/0.96 'Poppins', sans-serif; letter-spacing: -0.03em; color: var(--text-bright); margin: 0 0 64px;">My Journey</h2>
+
+      <div style="display: grid; grid-template-columns: 260px 1fr; gap: 0; border-top: 1px solid var(--border-subtle);">
+        <!-- Left timeline -->
+        <div style="border-right: 1px solid var(--border-subtle); padding-top: 40px; padding-right: 40px;">
+          <div class="timeline-entry timeline-active" data-job="1" style="padding-bottom: 32px; cursor: pointer;">
+            <div style="font: 500 14px/20px 'Poppins', sans-serif; color: var(--text-bright); margin-bottom: 4px;">Jul 2023 – Present</div>
+            <div style="font: 400 13px/18px 'Poppins', sans-serif; color: var(--text-secondary);">2 yrs 6 mos</div>
+          </div>
+          <div style="border-top: 1px solid var(--border-subtle);"></div>
+          <div class="timeline-entry" data-job="2" style="padding-top: 24px; cursor: pointer;">
+            <div style="font: 500 14px/20px 'Poppins', sans-serif; color: var(--text-secondary); margin-bottom: 4px;">Mar 2023 – Jun 2023</div>
+            <div style="font: 400 13px/18px 'Poppins', sans-serif; color: var(--text-disabled);">4 mos</div>
+          </div>
+        </div>
+
+        <!-- Right detail -->
+        <div style="padding: 40px 0 0 56px;">
+          <div id="job-1">
+            <h3 style="font: 600 28px/1.2 'Poppins', sans-serif; letter-spacing: -0.02em; color: var(--text-bright); margin: 0 0 8px;">UI/UX Designer</h3>
+            <div style="font: 400 14px/20px 'Poppins', sans-serif; color: var(--text-secondary); margin-bottom: 28px;">
+              Consortia Group &nbsp;·&nbsp; United States – Vietnam
+            </div>
+            <p style="font: 400 16px/26px 'Poppins', sans-serif; color: var(--text-primary); margin: 0 0 16px; max-width: 640px;">
+              I work across multiple product teams to design websites, brand identities, internal tools, and scalable design systems.
+            </p>
+            <p style="font: 400 16px/26px 'Poppins', sans-serif; color: var(--text-primary); margin: 0 0 28px; max-width: 640px;">
+              My responsibilities include wireframing, user flow mapping, high-fidelity UI design, interaction design, documenting components for developers, and performing testing after deployment to ensure the product functions correctly and matches the intended design.
+            </p>
+            <div style="font: 600 14px/20px 'Poppins', sans-serif; color: var(--text-bright); margin-bottom: 14px;">Key Projects and Accomplishments:</div>
+            <ul style="font: 400 15px/26px 'Poppins', sans-serif; color: var(--text-primary); margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; max-width: 640px;">
+              <li>Designed more than 10+ projects spanning websites, product interfaces, dashboards, landing pages, branding systems, and marketing assets in the fields of banking, AI-driven marketing, hospitality, and digital courses.</li>
+              <li>Used AI tools to speed up ideation, content generation, layout exploration, and component documentation.</li>
+              <li>Built consistent and scalable design systems adopted across different products.</li>
+              <li>Communicated effectively with developers by understanding technical structures, component behavior, and system limitations.</li>
+            </ul>
+          </div>
+
+          <div id="job-2" style="display: none;">
+            <h3 style="font: 600 28px/1.2 'Poppins', sans-serif; letter-spacing: -0.02em; color: var(--text-bright); margin: 0 0 8px;">UI/UX Designer</h3>
+            <div style="font: 400 14px/20px 'Poppins', sans-serif; color: var(--text-secondary); margin-bottom: 28px;">
+              Freelance &nbsp;·&nbsp; Remote
+            </div>
+            <p style="font: 400 16px/26px 'Poppins', sans-serif; color: var(--text-primary); margin: 0 0 16px; max-width: 640px;">
+              Worked on short-term freelance design engagements, delivering UI designs, wireframes, and design system components for early-stage products.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MY DESIGN SKILLS ── -->
+  <section style="border-bottom: 1px solid var(--border-subtle);">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 96px 48px;">
+      <div style="text-align: center; margin-bottom: 16px;">
+        <h2 style="font: 500 64px/0.96 'Poppins', sans-serif; letter-spacing: -0.03em; color: var(--text-bright); margin: 0;">
+          My Design <span style="color: var(--text-accent);">Skills</span>
+        </h2>
+      </div>
+      <p style="text-align: center; font: 400 16px/26px 'Poppins', sans-serif; color: var(--text-secondary); margin: 0 0 64px;">
+        A comprehensive set of skills refined through years of practice and continuous learning.
+      </p>
+
+      <div style="border: 1px dashed var(--border-default); border-radius: var(--radius-xl); padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px 80px;">
+        {[
+          { label: 'UI Design',       tags: ['Interface Design', 'Visual Hierarchy', 'Color Theory', 'Typography'] },
+          { label: 'Design Systems',  tags: ['Component Libraries', 'Style Guides', 'Documentation', 'Pattern Libraries'] },
+          { label: 'UX Design',       tags: ['User Research', 'Usability Testing', 'Information Architecture', 'Wireframing'] },
+          { label: 'Soft Skills',     tags: ['Communication', 'Problem Solving', 'Collaboration', 'Time Management'] },
+          { label: 'Prototyping',     tags: ['Interactive Prototypes', 'User Flows', 'Animation', 'Micro-interactions'] },
+          { label: 'Tools',           tags: ['Figma', 'AI Design Tools', 'Adobe Illustrator', 'Adobe Photoshop'] },
+        ].map((group) => (
+          <div>
+            <div class="overline" style="margin-bottom: 14px;">{group.label}</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              {group.tags.map((tag) => (
+                <span style="display: inline-block; padding: 5px 14px; border: 1px solid var(--border-default); border-radius: var(--radius-sm); font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary);">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const entries = document.querySelectorAll<HTMLElement>('.timeline-entry');
+  const jobs = [document.getElementById('job-1'), document.getElementById('job-2')];
+
+  entries.forEach((entry) => {
+    entry.addEventListener('click', () => {
+      const jobId = entry.dataset.job;
+      entries.forEach((e) => e.classList.remove('timeline-active'));
+      entry.classList.add('timeline-active');
+      jobs.forEach((j) => {
+        if (j) j.style.display = j.id === `job-${jobId}` ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  .timeline-active > div:first-child { color: var(--text-bright) !important; }
+  .timeline-entry:not(.timeline-active):hover > div:first-child { color: var(--text-primary) !important; }
+</style>

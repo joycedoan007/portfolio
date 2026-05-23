@@ -4,6 +4,7 @@ date: "2025-04-08"
 readTime: 9 min read
 description: Every feature has a complexity cost. Most teams pay it without knowing the price.
 notionUrl: https://joycedoan.notion.site/complexity-budgets
+category: Principles
 ---
 
 Complexity is the one resource that products accumulate naturally and spend unconsciously. You don't decide to make something complicated. You decide to add one more option, one more edge case, one more configuration toggle — and complexity is what's left when you add them all up.

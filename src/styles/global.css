@@ -87,6 +87,7 @@ body {
   color: var(--text-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 /* ─── Scroll-reveal ─── */

@@ -4,6 +4,7 @@ date: "2025-11-10"
 readTime: 12 min read
 description: A field guide to confidence, declines, and the difference between a copilot and a clippy.
 notionUrl: https://joycedoan.notion.site/when-ai-helps
+category: AI & tools
 ---
 
 Every few months someone ships a product with AI in it and calls it a copilot. Sometimes it's genuinely useful. Sometimes it's a suggestions dropdown with a language model behind it, dressed up in the language of collaboration. The word copilot has done a lot of work in the last two years and it's starting to show the strain.

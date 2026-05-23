@@ -4,6 +4,7 @@ date: "2025-08-20"
 readTime: 6 min read
 description: Configurability is a debt instrument. Defaults are the principal payment.
 notionUrl: https://joycedoan.notion.site/opinionated-defaults
+category: Principles
 ---
 
 There's a specific kind of product meeting where someone says "we should let users configure this" and everyone nods. Configuration feels like generosity. You're not forcing a choice on the user — you're respecting that they might want something different. You're being flexible.

@@ -4,6 +4,7 @@ subtitle: Mortgage Servicing
 description: Delivered operational dashboards for loan event tracking, including statuses, workflows, logs, and troubleshooting visibility, tailored for bank servicing teams.
 skills: ["BRANDING", "WEB DESIGN", "WEBFLOW"]
 role: UI/UX Designer
+year: "2023"
 hasImage: false
 order: 8
 ---

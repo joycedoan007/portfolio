@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export interface WorkItem {
   id: string;
+  slug?: string;
   tag: string;
   title: string;
   year: string;
@@ -180,6 +181,67 @@ function WorkRow({
   onHover: (item: WorkItem | null, e?: React.MouseEvent) => void;
   isHovered: boolean;
 }) {
+  const rowStyle: React.CSSProperties = {
+    display: 'grid',
+    gridTemplateColumns: '64px 200px 1fr 120px 100px 32px',
+    gap: 24,
+    alignItems: 'center',
+    padding: `24px ${isHovered ? '16px' : '0'}`,
+    borderBottom: '1px solid var(--border-subtle)',
+    cursor: 'pointer',
+    transition: 'background 200ms ease, padding 200ms ease',
+    background: isHovered ? 'var(--bg-surface)' : 'transparent',
+    textDecoration: 'none',
+    color: 'inherit',
+  };
+
+  const inner = (
+    <>
+      <span style={{ font: "500 14px/18px 'JetBrains Mono', monospace", color: 'var(--text-secondary)' }}>
+        {String(idx + 1).padStart(2, '0')}
+      </span>
+      <span style={{
+        font: "500 13px/18px 'JetBrains Mono', monospace",
+        color: isHovered ? 'var(--text-accent)' : 'var(--text-secondary)',
+        letterSpacing: '0.02em',
+        textTransform: 'uppercase',
+        transition: 'color 200ms ease',
+      }}>
+        {item.tag}
+      </span>
+      <span style={{ font: "500 32px/40px 'Poppins', sans-serif", letterSpacing: '-0.02em', color: 'var(--text-bright)' }}>
+        {item.title}
+      </span>
+      <span style={{ font: "400 14px/20px 'Poppins', sans-serif", color: 'var(--text-primary)' }}>
+        {item.role}
+      </span>
+      <span style={{ font: "500 14px/20px 'JetBrains Mono', monospace", color: 'var(--text-secondary)' }}>
+        {item.year}
+      </span>
+      <i className="ph-bold ph-arrow-up-right" style={{
+        fontSize: 18,
+        color: isHovered ? 'var(--text-accent)' : 'var(--text-secondary)',
+        transition: 'color 200ms ease, transform 200ms ease',
+        transform: isHovered ? 'translate(2px, -2px)' : 'none',
+      }} />
+    </>
+  );
+
+  if (item.slug) {
+    return (
+      <a
+        href={`/work/${item.slug}`}
+        onMouseEnter={(e) => onHover(item, e)}
+        onMouseLeave={() => onHover(null)}
+        onMouseMove={(e) => onHover(item, e)}
+        data-cursor="hover"
+        style={rowStyle}
+      >
+        {inner}
+      </a>
+    );
+  }
+
   return (
     <div
       onMouseEnter={(e) => onHover(item, e)}
@@ -187,62 +249,9 @@ function WorkRow({
       onMouseMove={(e) => onHover(item, e)}
       onClick={() => onOpen(item)}
       data-cursor="hover"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '64px 200px 1fr 120px 100px 32px',
-        gap: 24,
-        alignItems: 'center',
-        padding: `24px ${isHovered ? '16px' : '0'}`,
-        borderBottom: '1px solid var(--border-subtle)',
-        cursor: 'pointer',
-        transition: 'background 200ms ease, padding 200ms ease',
-        background: isHovered ? 'var(--bg-surface)' : 'transparent',
-      }}
+      style={rowStyle}
     >
-      <span
-        style={{ font: "500 14px/18px 'JetBrains Mono', monospace", color: 'var(--text-secondary)' }}
-      >
-        {String(idx + 1).padStart(2, '0')}
-      </span>
-      <span
-        style={{
-          font: "500 13px/18px 'JetBrains Mono', monospace",
-          color: isHovered ? 'var(--text-accent)' : 'var(--text-secondary)',
-          letterSpacing: '0.02em',
-          textTransform: 'uppercase',
-          transition: 'color 200ms ease',
-        }}
-      >
-        {item.tag}
-      </span>
-      <span
-        style={{
-          font: "500 32px/40px 'Poppins', sans-serif",
-          letterSpacing: '-0.02em',
-          color: 'var(--text-bright)',
-        }}
-      >
-        {item.title}
-      </span>
-      <span
-        style={{ font: "400 14px/20px 'Poppins', sans-serif", color: 'var(--text-primary)' }}
-      >
-        {item.role}
-      </span>
-      <span
-        style={{ font: "500 14px/20px 'JetBrains Mono', monospace", color: 'var(--text-secondary)' }}
-      >
-        {item.year}
-      </span>
-      <i
-        className="ph-bold ph-arrow-up-right"
-        style={{
-          fontSize: 18,
-          color: isHovered ? 'var(--text-accent)' : 'var(--text-secondary)',
-          transition: 'color 200ms ease, transform 200ms ease',
-          transform: isHovered ? 'translate(2px, -2px)' : 'none',
-        }}
-      />
+      {inner}
     </div>
   );
 }
@@ -487,7 +496,7 @@ function Featured({
                 </div>
                 <p
                   style={{
-                    font: "400 17px/28px 'Poppins', sans-serif",
+                    font: "400 15px/24px 'Poppins', sans-serif",
                     color: 'var(--text-primary)',
                     margin: 0,
                   }}
@@ -656,7 +665,7 @@ function CaseModal({
           </h2>
           <p
             style={{
-              font: "400 22px/32px 'Poppins', sans-serif",
+              font: "400 18px/28px 'Poppins', sans-serif",
               color: 'var(--text-primary)',
               margin: '0 0 40px',
               maxWidth: 760,
@@ -737,7 +746,7 @@ function CaseModal({
               <div className="overline">{s.h}</div>
               <p
                 style={{
-                  font: "400 16px/26px 'Poppins', sans-serif",
+                  font: "400 14px/22px 'Poppins', sans-serif",
                   color: 'var(--text-primary)',
                   margin: 0,
                   maxWidth: 800,

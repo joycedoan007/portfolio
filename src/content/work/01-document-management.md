@@ -1,9 +1,10 @@
 ---
 title: Document Management System
 subtitle: Document Management System
-description: A centralized platform for uploading, storing, tracking, and validating documents. Ensured workflow accuracy by drafting test cases, reviewing UX flows, and improving usability during early product development.
+description: Centralized platform for document upload, tracking, and validation. Improved usability through UX flow reviews and test cases.
 skills: ["BRANDING", "WEB DESIGN", "WEBFLOW"]
 role: UI/UX Designer
+year: "2025"
 hasImage: true
 order: 1
 ---
