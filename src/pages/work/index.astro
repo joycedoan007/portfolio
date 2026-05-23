@@ -1,0 +1,257 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ThemeToggle from '../../components/ThemeToggle';
+
+const entries = await getCollection('work');
+const sorted = entries.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+---
+
+<Layout title="Work — Joyce Doan" description="Selected UI/UX design work by Joyce Doan.">
+
+  <!-- ── Header (matches writing page) ─────────────────────────── -->
+  <header style="position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg-page) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle);">
+    <div style="max-width: 1320px; margin: 0 auto; padding: 0 48px; height: 48px; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: inline-flex; align-items: center; gap: 16px;">
+        <a href="/" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text-secondary); font: 500 12px/16px 'JetBrains Mono', monospace; transition: color 150ms ease;" class="back-link">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0;">
+            <path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Portfolio
+        </a>
+<a href="/" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none;">
+          <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+          <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
+          <span style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary);">Work</span>
+        </a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <a href="/writing" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Writing</a>
+        <a href="/#contact" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Contact</a>
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Intro ──────────────────────────────────────────────────── -->
+  <div style="max-width: 1320px; margin: 0 auto; padding: 72px 48px 56px; border-bottom: 1px solid var(--border-subtle);">
+    <div class="overline" style="margin-bottom: 16px;">UI/UX Designer · Social Media</div>
+    <h1 style="font: 600 clamp(36px, 5vw, 64px)/1.05 'Poppins', sans-serif; letter-spacing: -0.04em; color: var(--text-bright); margin: 0 0 20px; max-width: 640px;">
+      Designs that convert,<br/>not just impress.
+    </h1>
+    <p style="font: 400 15px/24px 'Poppins', sans-serif; color: var(--text-secondary); margin: 0; max-width: 420px;">
+      Product UX and web design across analytics, AI, finance, and B2B SaaS.
+    </p>
+  </div>
+
+  <!-- ── Project rows ───────────────────────────────────────────── -->
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 48px 120px;">
+    {sorted.map((entry, i) => {
+      const w = entry.data;
+      const isEven = i % 2 === 0; // even → image left, text right
+
+      return (
+        <div style={`
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 72px;
+          align-items: center;
+          padding: 72px 0;
+          border-bottom: 1px solid var(--border-subtle);
+        `}>
+
+          {/* ── Image side (left on even rows) ── */}
+          {isEven && (
+            <div style={`
+              border-radius: var(--radius-xl);
+              border: 1px solid var(--border-subtle);
+              background: var(--bg-surface);
+              aspect-ratio: 4/3;
+              overflow: hidden;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}>
+              {w.hasImage ? (
+                /* Device mockup */
+                <div style="width: 82%; display: flex; align-items: flex-end; position: relative; height: 72%;">
+                  {/* Phone */}
+                  <div style={`
+                    position: absolute; left: 0; bottom: 0;
+                    width: 20%; aspect-ratio: 9/18;
+                    background: var(--bg-elevated);
+                    border: 1px solid var(--border-default);
+                    border-radius: var(--radius-lg);
+                    z-index: 1;
+                  `}/>
+                  {/* Tablet */}
+                  <div style={`
+                    position: absolute; left: 14%; bottom: 0;
+                    width: 34%; aspect-ratio: 3/4;
+                    background: var(--bg-elevated);
+                    border: 1px solid var(--border-default);
+                    border-radius: var(--radius-lg);
+                    z-index: 2;
+                  `}/>
+                  {/* Laptop */}
+                  <div style="margin-left: auto; width: 68%; z-index: 3;">
+                    <div style={`
+                      background: var(--bg-elevated);
+                      border: 1px solid var(--border-default);
+                      border-bottom: none;
+                      border-radius: var(--radius-md) var(--radius-md) 0 0;
+                      padding: 5px 10px;
+                      display: flex;
+                      gap: 5px;
+                      align-items: center;
+                    `}>
+                      <div style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-default);"/>
+                      <div style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-default);"/>
+                      <div style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-default);"/>
+                    </div>
+                    <div style={`
+                      border: 1px solid var(--border-default);
+                      border-top: none;
+                      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+                      aspect-ratio: 16/10;
+                      background: var(--bg-page);
+                    `}/>
+                    <div style={`
+                      height: 8px;
+                      background: var(--bg-elevated);
+                      border: 1px solid var(--border-default);
+                      border-top: none;
+                      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+                      margin: 0 14%;
+                    `}/>
+                  </div>
+                </div>
+              ) : (
+                /* No-image: checkerboard placeholder */
+                <div style={`
+                  width: 100%; height: 100%;
+                  background-image: repeating-conic-gradient(var(--bg-elevated) 0% 25%, var(--bg-surface) 0% 50%);
+                  background-size: 20px 20px;
+                `}/>
+              )}
+            </div>
+          )}
+
+          {/* ── Text side ── */}
+          <div>
+            <div class="overline" style="margin-bottom: 20px;">
+              {String(i + 1).padStart(2, '0')} · {w.subtitle}
+            </div>
+            <h2 style="font: 600 clamp(20px, 2.2vw, 28px)/1.15 'Poppins', sans-serif; letter-spacing: -0.02em; color: var(--text-bright); margin: 0 0 16px; text-transform: uppercase;">
+              {w.title}
+            </h2>
+            <p style="font: 400 15px/25px 'Poppins', sans-serif; color: var(--text-secondary); margin: 0 0 24px; max-width: 440px;">
+              {w.description}
+            </p>
+
+            <!-- Role badge -->
+            <span style="display: inline-block; padding: 5px 14px; border-radius: var(--radius-full); border: 1px solid var(--border-default); font: 500 12px/18px 'Poppins', sans-serif; color: var(--text-secondary);">
+              {w.role}
+            </span>
+
+            <!-- Divider + meta -->
+            <div style="margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+              <div style="font: 500 14px/20px 'Poppins', sans-serif; color: var(--text-primary); margin-bottom: 4px;">
+                {w.subtitle}
+              </div>
+              <div class="overline" style="letter-spacing: 0.04em;">
+                {w.skills.join(' · ')}
+              </div>
+            </div>
+          </div>
+
+          {/* ── Image side (right on odd rows) ── */}
+          {!isEven && (
+            <div style={`
+              border-radius: var(--radius-xl);
+              border: 1px solid var(--border-subtle);
+              background: var(--bg-surface);
+              aspect-ratio: 4/3;
+              overflow: hidden;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}>
+              {w.hasImage ? (
+                <div style="width: 82%; display: flex; align-items: flex-end; position: relative; height: 72%;">
+                  <div style={`
+                    position: absolute; left: 0; bottom: 0;
+                    width: 20%; aspect-ratio: 9/18;
+                    background: var(--bg-elevated);
+                    border: 1px solid var(--border-default);
+                    border-radius: var(--radius-lg);
+                    z-index: 1;
+                  `}/>
+                  <div style={`
+                    position: absolute; left: 14%; bottom: 0;
+                    width: 34%; aspect-ratio: 3/4;
+                    background: var(--bg-elevated);
+                    border: 1px solid var(--border-default);
+                    border-radius: var(--radius-lg);
+                    z-index: 2;
+                  `}/>
+                  <div style="margin-left: auto; width: 68%; z-index: 3;">
+                    <div style={`
+                      background: var(--bg-elevated);
+                      border: 1px solid var(--border-default);
+                      border-bottom: none;
+                      border-radius: var(--radius-md) var(--radius-md) 0 0;
+                      padding: 5px 10px;
+                      display: flex;
+                      gap: 5px;
+                      align-items: center;
+                    `}>
+                      <div style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-default);"/>
+                      <div style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-default);"/>
+                      <div style="width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--border-default);"/>
+                    </div>
+                    <div style={`
+                      border: 1px solid var(--border-default);
+                      border-top: none;
+                      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+                      aspect-ratio: 16/10;
+                      background: var(--bg-page);
+                    `}/>
+                    <div style={`
+                      height: 8px;
+                      background: var(--bg-elevated);
+                      border: 1px solid var(--border-default);
+                      border-top: none;
+                      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+                      margin: 0 14%;
+                    `}/>
+                  </div>
+                </div>
+              ) : (
+                <div style={`
+                  width: 100%; height: 100%;
+                  background-image: repeating-conic-gradient(var(--bg-elevated) 0% 25%, var(--bg-surface) 0% 50%);
+                  background-size: 20px 20px;
+                `}/>
+              )}
+            </div>
+          )}
+
+        </div>
+      );
+    })}
+  </div>
+
+  <!-- ── Footer ─────────────────────────────────────────────────── -->
+  <footer style="padding: 32px 48px; background: var(--bg-page);">
+    <div style="max-width: 1320px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font: 500 13px/20px 'JetBrains Mono', monospace; color: var(--text-secondary);">
+      <a href="/" style="text-decoration: none; color: var(--text-secondary);">← Back to portfolio</a>
+      <span>© 2026 Joyce Doan · Edition 04</span>
+    </div>
+  </footer>
+
+
+<style>
+  .back-link:hover { color: var(--text-bright) !important; }
+</style>
+</Layout>

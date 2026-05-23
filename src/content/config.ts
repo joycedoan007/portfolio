@@ -3,19 +3,12 @@ import { defineCollection, z } from 'astro:content';
 const work = defineCollection({
   type: 'content',
   schema: z.object({
-    id: z.string(),
     title: z.string(),
-    tag: z.string(),
-    year: z.string(),
-    role: z.string(),
-    size: z.string(),
-    accent: z.enum(['green', 'dark', 'gray']),
-    summary: z.string(),
-    problem: z.string(),
-    approach: z.string(),
-    outcome: z.string(),
-    metrics: z.array(z.object({ value: z.string(), label: z.string() })),
-    featured: z.boolean().optional(),
+    subtitle: z.string(),          // e.g. "Document Management System"
+    description: z.string(),
+    skills: z.array(z.string()),   // e.g. ["BRANDING", "WEB DESIGN", "WEBFLOW"]
+    role: z.string().default('UI/UX Designer'),
+    hasImage: z.boolean().default(false),
     order: z.number().default(99),
   }),
 });

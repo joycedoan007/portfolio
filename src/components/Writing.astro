@@ -5,6 +5,7 @@ interface WritingItem {
   readTime: string;
   description: string;
   notionUrl: string;
+  slug: string;
 }
 interface Props {
   items: WritingItem[];
@@ -21,7 +22,7 @@ const { items } = Astro.props;
       <div>
         <div class="overline" style="margin-bottom: 12px;">05 · Writing · From my Notion</div>
         <h2
-          style="font: 500 64px/0.96 'Inter Tight', sans-serif; letter-spacing: -0.03em; color: var(--text-bright); margin: 0;"
+          style="font: 500 64px/0.96 'Poppins', sans-serif; letter-spacing: -0.03em; color: var(--text-bright); margin: 0;"
         >
           Notes on the craft.
         </h2>
@@ -31,7 +32,7 @@ const { items } = Astro.props;
         target="_blank"
         rel="noopener"
         data-cursor="hover"
-        style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-full); border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-bright); text-decoration: none; font: 500 13px/20px 'Inter Tight', sans-serif;"
+        style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-full); border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-bright); text-decoration: none; font: 500 13px/20px 'Poppins', sans-serif;"
       >
         <i class="ph ph-notion-logo" style="font-size: 16px;"></i> Read on Notion
         <i class="ph-bold ph-arrow-up-right" style="font-size: 13px;"></i>
@@ -41,9 +42,7 @@ const { items } = Astro.props;
     {
       items.map((w, i) => (
         <a
-          href={w.notionUrl}
-          target="_blank"
-          rel="noopener"
+          href={`/writing/${w.slug}`}
           data-cursor="hover"
           data-reveal
           style={`--reveal-delay: ${i * 40}ms; display: grid; grid-template-columns: 64px 200px 1fr 200px 32px; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--border-subtle); text-decoration: none; color: inherit; transition: background 200ms ease, padding 200ms ease;`}
@@ -60,18 +59,18 @@ const { items } = Astro.props;
             {new Date(w.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} · {w.readTime}
           </span>
           <h3
-            style="font: 500 24px/30px 'Inter Tight', sans-serif; letter-spacing: -0.015em; color: var(--text-bright); margin: 0;"
+            style="font: 500 24px/30px 'Poppins', sans-serif; letter-spacing: -0.015em; color: var(--text-bright); margin: 0;"
           >
             {w.title}
           </h3>
           <p
-            style="font: 400 14px/20px 'Inter Tight', sans-serif; color: var(--text-primary); margin: 0;"
+            style="font: 400 14px/20px 'Poppins', sans-serif; color: var(--text-primary); margin: 0;"
           >
             {w.description}
           </p>
           <i
             class="ph-bold ph-arrow-up-right"
-            style="font-size: 18px; color: var(--text-secondary);"
+            style="font-size: 16px; color: var(--text-secondary);"
           />
         </a>
       ))

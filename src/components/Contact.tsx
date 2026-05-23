@@ -37,7 +37,7 @@ export default function Contact({ email, socials }: Props) {
           <div data-reveal>
             <h2
               style={{
-                font: "500 112px/0.92 'Inter Tight', sans-serif",
+                font: "500 112px/0.92 'Poppins', sans-serif",
                 letterSpacing: '-0.04em',
                 color: 'var(--text-bright)',
                 margin: 0,
@@ -50,7 +50,7 @@ export default function Contact({ email, socials }: Props) {
           <div data-reveal style={{ '--reveal-delay': '120ms' } as React.CSSProperties}>
             <p
               style={{
-                font: "400 19px/30px 'Inter Tight', sans-serif",
+                font: "400 19px/30px 'Poppins', sans-serif",
                 color: 'var(--text-primary)',
                 margin: '0 0 32px',
               }}
@@ -84,7 +84,7 @@ export default function Contact({ email, socials }: Props) {
                 </div>
                 <div
                   style={{
-                    font: "500 22px/28px 'Inter Tight', sans-serif",
+                    font: "500 22px/28px 'Poppins', sans-serif",
                     color: 'var(--text-bright)',
                   }}
                 >
@@ -97,7 +97,7 @@ export default function Contact({ email, socials }: Props) {
                   alignItems: 'center',
                   gap: 8,
                   color: copied ? 'var(--text-accent)' : 'var(--text-primary)',
-                  font: "600 14px/20px 'Inter Tight', sans-serif",
+                  font: "600 14px/20px 'Poppins', sans-serif",
                   transition: 'color 200ms ease',
                 }}
               >
@@ -127,7 +127,7 @@ export default function Contact({ email, socials }: Props) {
                     border: '1px solid var(--border-subtle)',
                     color: 'var(--text-primary)',
                     textDecoration: 'none',
-                    font: "500 14px/20px 'Inter Tight', sans-serif",
+                    font: "500 14px/20px 'Poppins', sans-serif",
                     background: 'var(--bg-page)',
                   }}
                 >

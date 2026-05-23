@@ -217,7 +217,7 @@ function WorkRow({
       </span>
       <span
         style={{
-          font: "500 32px/40px 'Inter Tight', sans-serif",
+          font: "500 32px/40px 'Poppins', sans-serif",
           letterSpacing: '-0.02em',
           color: 'var(--text-bright)',
         }}
@@ -225,7 +225,7 @@ function WorkRow({
         {item.title}
       </span>
       <span
-        style={{ font: "400 14px/20px 'Inter Tight', sans-serif", color: 'var(--text-primary)' }}
+        style={{ font: "400 14px/20px 'Poppins', sans-serif", color: 'var(--text-primary)' }}
       >
         {item.role}
       </span>
@@ -283,7 +283,7 @@ function WorkIndex({
             </div>
             <h2
               style={{
-                font: "500 80px/0.92 'Inter Tight', sans-serif",
+                font: "500 80px/0.92 'Poppins', sans-serif",
                 letterSpacing: '-0.035em',
                 color: 'var(--text-bright)',
                 margin: 0,
@@ -366,7 +366,7 @@ function WorkIndex({
               padding: '4px 10px',
               background: 'rgba(11,14,18,0.7)',
               borderRadius: 'var(--radius-full)',
-              font: "600 11px/14px 'Inter Tight', sans-serif",
+              font: "600 11px/14px 'Poppins', sans-serif",
               color: 'var(--text-bright)',
               letterSpacing: '0.04em',
               textTransform: 'uppercase',
@@ -419,7 +419,7 @@ function Featured({
         <div data-reveal style={{ '--reveal-delay': '80ms' } as React.CSSProperties}>
           <h2
             style={{
-              font: "500 96px/0.92 'Inter Tight', sans-serif",
+              font: "500 96px/0.92 'Poppins', sans-serif",
               letterSpacing: '-0.035em',
               color: 'var(--text-bright)',
               margin: '0 0 48px',
@@ -453,7 +453,7 @@ function Featured({
                 padding: '6px 12px',
                 background: 'rgba(11,14,18,0.7)',
                 borderRadius: 'var(--radius-full)',
-                font: "600 12px/16px 'Inter Tight', sans-serif",
+                font: "600 12px/16px 'Poppins', sans-serif",
                 color: 'var(--text-bright)',
                 letterSpacing: '0.04em',
                 textTransform: 'uppercase',
@@ -487,7 +487,7 @@ function Featured({
                 </div>
                 <p
                   style={{
-                    font: "400 17px/28px 'Inter Tight', sans-serif",
+                    font: "400 17px/28px 'Poppins', sans-serif",
                     color: 'var(--text-primary)',
                     margin: 0,
                   }}
@@ -524,7 +524,7 @@ function Featured({
                 </div>
                 <div
                   style={{
-                    font: "500 48px/52px 'Inter Tight', sans-serif",
+                    font: "500 48px/52px 'Poppins', sans-serif",
                     letterSpacing: '-0.025em',
                     color: 'var(--text-accent)',
                   }}
@@ -542,7 +542,7 @@ function Featured({
                 border: 'none',
                 cursor: 'pointer',
                 color: 'var(--text-bright)',
-                font: "600 15px/20px 'Inter Tight', sans-serif",
+                font: "600 15px/20px 'Poppins', sans-serif",
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 12,
@@ -645,7 +645,7 @@ function CaseModal({
           </div>
           <h2
             style={{
-              font: "500 72px/0.96 'Inter Tight', sans-serif",
+              font: "500 72px/0.96 'Poppins', sans-serif",
               letterSpacing: '-0.03em',
               color: 'var(--text-bright)',
               margin: '0 0 16px',
@@ -656,7 +656,7 @@ function CaseModal({
           </h2>
           <p
             style={{
-              font: "400 22px/32px 'Inter Tight', sans-serif",
+              font: "400 22px/32px 'Poppins', sans-serif",
               color: 'var(--text-primary)',
               margin: '0 0 40px',
               maxWidth: 760,
@@ -704,7 +704,7 @@ function CaseModal({
                 </div>
                 <div
                   style={{
-                    font: "500 36px/40px 'Inter Tight', sans-serif",
+                    font: "500 36px/40px 'Poppins', sans-serif",
                     letterSpacing: '-0.02em',
                     color: 'var(--text-accent)',
                   }}
@@ -737,7 +737,7 @@ function CaseModal({
               <div className="overline">{s.h}</div>
               <p
                 style={{
-                  font: "400 18px/30px 'Inter Tight', sans-serif",
+                  font: "400 16px/26px 'Poppins', sans-serif",
                   color: 'var(--text-primary)',
                   margin: 0,
                   maxWidth: 800,

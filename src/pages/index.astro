@@ -13,24 +13,77 @@ import CustomCursor from '../components/CustomCursor';
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
 
-const workEntries = await getCollection('work');
 const writingEntries = await getCollection('writing');
-
-const workItems = workEntries
-  .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
-  .map((e) => e.data);
 
 const writingItems = writingEntries
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
-  .map((e) => e.data);
+  .map((e) => ({ ...e.data, slug: e.slug }));
 
 const featuredId = 'helio';
+
+// Featured case study data (kept separate from the /work page content collection)
+const workItems = [
+  {
+    id: 'helio', tag: 'Analytics platform', title: 'Helio Analytics', year: '2025',
+    role: 'Lead designer', size: '6 mo · 3 engs', accent: 'green', featured: true, order: 1,
+    summary: 'How we cut time-to-insight by 71% by killing the dropdown.',
+    problem: 'Customers were running the same five queries every Monday morning and abandoning the platform when the loading state stretched past three seconds. The dashboard was technically powerful but emotionally exhausting.',
+    approach: 'Shadowed 12 analyst-users for two weeks. Found the actual job was "answer this question for my standup in 90 seconds". Re-anchored the entire IA around saved questions instead of saved queries.',
+    outcome: '71% reduction in median time-to-insight. Mon-AM session length down 40%, NPS up 28 pts. The team renamed Saved Queries to Questions; the rename stuck.',
+    metrics: [{ value: '71%', label: 'Faster time-to-insight' }, { value: '+28', label: 'NPS delta' }, { value: '3 steps', label: 'Down from 14' }],
+  },
+  {
+    id: 'quill', tag: 'AI tooling', title: 'Quill AI', year: '2024',
+    role: 'Product designer', size: '4 mo · 2 engs', accent: 'dark', order: 2,
+    summary: 'An AI sidekick that knows when not to suggest anything.',
+    problem: 'Every AI feature in our space was a chat panel bolted onto a sidebar. Useful in demos, ignored in real workflows.',
+    approach: 'Built suggestion patterns around the existing edit loop, not around a chat surface. Confidence-graded outputs with clear declines.',
+    outcome: 'Suggestion-accept rate of 41% (vs 9% for the chatbot version). Shipped from sketch to v1.0 in 11 weeks.',
+    metrics: [{ value: '41%', label: 'Accept rate' }, { value: '11 wks', label: 'Sketch to ship' }, { value: '9 → 41', label: 'vs chatbot' }],
+  },
+  {
+    id: 'mercury', tag: 'Customer behavior', title: 'Mercury Insights', year: '2024',
+    role: 'Design + IA', size: '5 mo · solo', accent: 'gray', order: 3,
+    summary: 'A behavioral dashboard merchandisers actually open on Mondays.',
+    problem: 'Merchandisers had a 60-tab spreadsheet and a healthy fear of the analytics tool. Funnels existed but nobody trusted them.',
+    approach: 'Designed cohort-first rather than event-first. Made one screen answer one question. Gave every chart a written caption.',
+    outcome: 'Weekly active users jumped from 22% to 78% of the merchandising team. Saved-views became the most-shared internal artifact.',
+    metrics: [{ value: '3.5×', label: 'Weekly actives' }, { value: '78%', label: 'Team adoption' }, { value: '1', label: 'Question per screen' }],
+  },
+  {
+    id: 'northstar', tag: 'KPI system', title: 'Northstar', year: '2023',
+    role: 'Lead + systems', size: '8 mo · 4 designers', accent: 'green', order: 4,
+    summary: 'One vocabulary for 60+ operational dashboards.',
+    problem: 'Six teams, six different ways to draw a chart, zero shared definitions.',
+    approach: 'Built a chart-pattern library tied to a metric dictionary. Tied governance to the design system, not to a wiki nobody read.',
+    outcome: '60+ dashboards refactored across two quarters. Onboarding time for new analysts dropped from 6 weeks to 9 days.',
+    metrics: [{ value: '60+', label: 'Dashboards aligned' }, { value: '9 days', label: 'New-hire ramp' }, { value: '1', label: 'Metric dictionary' }],
+  },
+  {
+    id: 'atlas', tag: 'Data exploration', title: 'Atlas Data Studio', year: '2023',
+    role: 'Product designer', size: '6 mo · 3 engs', accent: 'dark', order: 5,
+    summary: 'No-code data exploration without the no-code tax.',
+    problem: 'Non-technical users wanted SQL-power without SQL.',
+    approach: 'Made joins, filters, and aggregations the three first-class verbs. Hid everything else behind progressive disclosure.',
+    outcome: "Self-serve query rate up 4×. The data team's ad-hoc request queue shrank by 60%.",
+    metrics: [{ value: '4×', label: 'Self-serve queries' }, { value: '−60%', label: 'Data team requests' }, { value: '3', label: 'Verbs, not 30' }],
+  },
+  {
+    id: 'vector', tag: 'Healthcare', title: 'Vector Health', year: '2022',
+    role: 'Product designer', size: '10 mo · 5 engs', accent: 'gray', order: 6,
+    summary: 'Patient-outcome data designed for the 60-second corridor check.',
+    problem: 'Clinicians had 60 seconds between rooms and a 14-screen workflow.',
+    approach: 'Tier-zero, one-screen triage view. Color used only for clinical severity, never for chrome. WCAG AAA throughout.',
+    outcome: 'Critical-event acknowledgement time dropped 4.2 minutes on average.',
+    metrics: [{ value: '−4.2 min', label: 'Ack time' }, { value: 'AAA', label: 'Accessibility' }, { value: '1 screen', label: 'Triage view' }],
+  },
+];
 
 const SITE = {
   name: 'Joyce Doan',
   role: 'UI/UX Designer',
   company: 'Consortia Group',
-  email: 'joyce@joycedoan.com',
+  email: 'joycedoan.007@gmail.com',
   socials: [
     { label: 'LinkedIn', icon: 'linkedin-logo', href: 'https://linkedin.com/in/joycedoan007' },
     { label: 'X', icon: 'x-logo', href: 'https://x.com/joycedoan007' },
