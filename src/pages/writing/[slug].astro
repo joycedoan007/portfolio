@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ThemeToggle from '../../components/ThemeToggle';
+import ContactCTA from '../../components/ContactCTA.astro';
+import WritingSidebar from '../../components/WritingSidebar.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('writing');
@@ -18,6 +20,9 @@ const allEntries = await getCollection('writing');
 const sorted = allEntries.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+const idx = sorted.findIndex(e => e.slug === entry.slug);
+const prev = idx < sorted.length - 1 ? sorted[idx + 1] : null;
+const next = idx > 0 ? sorted[idx - 1] : null;
 
 // Group articles by category, preserving insertion order
 const categoryOrder: string[] = [];
@@ -44,14 +49,13 @@ function fmtDate(d: string) {
     <div
       style="max-width: 100%; padding: 0 24px; height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px;"
     >
-      <a
-        href="/"
-        style="display: inline-flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0;"
-      >
-        <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+      <div style="display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0;">
+        <a href="/" style="display: inline-flex; text-decoration: none;">
+          <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+        </a>
         <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
-        <span style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary);">Writing</span>
-      </a>
+        <a href="/writing" style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Writing</a>
+      </div>
       <ThemeToggle client:load />
     </div>
   </header>
@@ -59,72 +63,7 @@ function fmtDate(d: string) {
   <!-- ── Three-column layout ── -->
   <div style="display: grid; grid-template-columns: 220px 1fr 200px; min-height: calc(100vh - 48px);">
 
-    <!-- LEFT SIDEBAR -->
-    <aside
-      style="position: sticky; top: 48px; height: calc(100vh - 48px); overflow-y: auto; border-right: 1px solid var(--border-subtle); padding: 32px 0;"
-    >
-      <!-- Grouped article list -->
-      <nav>
-        {
-          categoryOrder.map((cat) => {
-            const hasActive = grouped[cat].some((e) => e.slug === entry.slug);
-            const catId = cat.toLowerCase().replace(/[^a-z0-9]/g, '-');
-            return (
-              <>
-                <button
-                  data-cat-toggle={catId}
-                  aria-expanded={hasActive ? 'true' : 'false'}
-                  style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: none; border: none; cursor: pointer; text-align: left;"
-                  class="cat-toggle"
-                >
-                  <span style="font: 500 12px/16px 'Poppins', sans-serif; color: var(--text-secondary); letter-spacing: 0.01em;">
-                    {cat}
-                  </span>
-                  <svg
-                    data-cat-chevron={catId}
-                    width="12" height="12" viewBox="0 0 12 12" fill="none"
-                    style={`flex-shrink: 0; transition: transform 200ms ease; transform: rotate(${hasActive ? '90deg' : '0deg'});`}
-                  >
-                    <path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-                <div
-                  data-cat-items={catId}
-                  style={`overflow: hidden; transition: max-height 200ms ease; max-height: ${hasActive ? '600px' : '0px'};`}
-                >
-                  {grouped[cat].map((e) => {
-                    const isActive = e.slug === entry.slug;
-                    return (
-                      <a
-                        href={`/writing/${e.slug}`}
-                        style={`
-                          display: block;
-                          padding: 7px 20px;
-                          text-decoration: none;
-                          border-left: 2px solid ${isActive ? 'var(--primary-500)' : 'transparent'};
-                          background: ${isActive ? 'var(--bg-surface)' : 'transparent'};
-                          transition: background 150ms ease;
-                        `}
-                        class={isActive ? '' : 'sidebar-link'}
-                      >
-                        <div
-                          style={`font: ${isActive ? '500' : '400'} 13px/18px 'Poppins', sans-serif; color: ${isActive ? 'var(--text-bright)' : 'var(--text-secondary)'}; margin-bottom: 2px; transition: color 150ms ease;`}
-                        >
-                          {e.data.title}
-                        </div>
-                        <div style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">
-                          {fmtDate(e.data.date)} · {e.data.readTime}
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-              </>
-            );
-          })
-        }
-      </nav>
-    </aside>
+    <WritingSidebar entries={sorted} activeSlug={entry.slug} />
 
     <!-- MAIN CONTENT -->
     <main style="min-width: 0; padding: 56px 72px 120px;">
@@ -146,16 +85,20 @@ function fmtDate(d: string) {
         <Content />
       </div>
 
-      <!-- Footer -->
-      <div
-        style="margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 12px;"
-      >
-        <a
-          href="/"
-          style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-full); border: 1px solid var(--border-subtle); color: var(--text-secondary); text-decoration: none; font: 500 13px/20px 'Poppins', sans-serif; transition: color 150ms ease;"
-        >
-          ← Back to portfolio
-        </a>
+      <!-- Prev / Next -->
+      <div style="margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; gap: 16px;">
+        {prev ? (
+          <a href={`/writing/${prev.slug}`} style="display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); background: var(--bg-surface); text-decoration: none; flex: 1; transition: border-color 150ms ease;" class="nav-link">
+            <span style="font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled); text-transform: uppercase;">← Previous</span>
+            <span style="font: 500 14px/20px 'Poppins', sans-serif; color: var(--text-bright);">{prev.data.title}</span>
+          </a>
+        ) : <div style="flex:1" />}
+        {next ? (
+          <a href={`/writing/${next.slug}`} style="display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); background: var(--bg-surface); text-decoration: none; flex: 1; align-items: flex-end; transition: border-color 150ms ease;" class="nav-link">
+            <span style="font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled); text-transform: uppercase;">Next →</span>
+            <span style="font: 500 14px/20px 'Poppins', sans-serif; color: var(--text-bright);">{next.data.title}</span>
+          </a>
+        ) : <div style="flex:1" />}
       </div>
     </main>
 
@@ -299,19 +242,7 @@ function fmtDate(d: string) {
     margin: 40px 0;
   }
 
-  /* ── Sidebar hover states ── */
-  .sidebar-link:hover {
-    background: var(--bg-surface) !important;
-  }
-  .sidebar-link:hover > div:first-child {
-    color: var(--text-bright) !important;
-  }
-  .sidebar-back:hover {
-    color: var(--text-primary) !important;
-  }
-  .cat-toggle:hover span {
-    color: var(--text-bright) !important;
-  }
+  .nav-link:hover { border-color: var(--border-default) !important; }
   .toc-link:hover {
     color: var(--text-bright) !important;
   }
@@ -320,21 +251,6 @@ function fmtDate(d: string) {
     border-left-color: var(--primary-500) !important;
   }
 </style>
-
-<script>
-  // Category accordion
-  document.querySelectorAll<HTMLButtonElement>('[data-cat-toggle]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.catToggle!;
-      const items = document.querySelector<HTMLElement>(`[data-cat-items="${id}"]`);
-      const chevron = document.querySelector<SVGElement>(`[data-cat-chevron="${id}"]`);
-      const isOpen = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      if (items) items.style.maxHeight = isOpen ? '0px' : '600px';
-      if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
-    });
-  });
-</script>
 
 <script>
   // TOC scrollspy

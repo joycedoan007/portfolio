@@ -1,10 +1,121 @@
 ---
 import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ThemeToggle from '../../components/ThemeToggle';
+import WritingSidebar from '../../components/WritingSidebar.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
 
-const entries = await getCollection('writing');
-const sorted = entries.sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
-const first = sorted[0];
-return Astro.redirect(`/writing/${first.slug}`);
+const all = await getCollection('writing');
+const sorted = all.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const recent = sorted.slice(0, 2);
+const popular = sorted.filter(e => e.data.popular);
+
+function fmtDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
 ---
+
+<Layout title="Writing — Joyce Doan" description="Notes on design craft, AI, and product thinking by Joyce Doan.">
+
+  <header style="position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg-page) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle);">
+    <div style="max-width: 100%; padding: 0 24px; height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 24px;">
+      <div style="display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0;">
+        <a href="/" style="display: inline-flex; text-decoration: none;">
+          <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+        </a>
+        <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
+        <a href="/writing" style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-bright); text-decoration: none;">Writing</a>
+      </div>
+      <ThemeToggle client:load />
+    </div>
+  </header>
+
+  <div style="display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 48px);">
+
+    <WritingSidebar entries={sorted} />
+
+    <!-- Main content -->
+    <main style="min-width: 0;">
+
+      <!-- Hero -->
+      <div style="padding: 56px 72px 48px; border-bottom: 1px solid var(--border-subtle);">
+        <div class="overline" style="margin-bottom: 16px;">Notes on the craft</div>
+        <h1 style="font: 500 48px/1.0 'Poppins', sans-serif; letter-spacing: -0.04em; color: var(--text-bright); margin: 0 0 12px;">Writing</h1>
+        <p style="font: 400 15px/24px 'Poppins', sans-serif; color: var(--text-secondary); margin: 0; max-width: 480px;">
+          Short essays on design thinking, AI, data UX, and the product decisions behind complex interfaces.
+        </p>
+      </div>
+
+      <div style="padding: 56px 72px 96px;">
+
+        <!-- Recent -->
+        <div style="margin-bottom: 56px;">
+          <h2 style="font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 20px;">Recent</h2>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            {recent.map((e) => (
+              <a href={`/writing/${e.slug}`} class="writing-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 24px; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); background: var(--bg-surface); text-decoration: none; gap: 32px; transition: border-color 150ms ease;">
+                <div>
+                  <div class="overline" style="margin-bottom: 10px;">{e.data.category ?? 'Writing'}</div>
+                  <h3 style="font: 500 15px/1.4 'Poppins', sans-serif; color: var(--text-bright); margin: 0 0 8px;">{e.data.title}</h3>
+                  <p style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); margin: 0;">{e.data.description}</p>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">{fmtDate(e.data.date)} · {e.data.readTime}</span>
+                  <i class="ph-bold ph-arrow-up-right" style="font-size: 13px; color: var(--text-disabled);"></i>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Popular -->
+        <div style="margin-bottom: 56px;">
+          <h2 style="font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 20px;">Popular</h2>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            {popular.map((e) => (
+              <a href={`/writing/${e.slug}`} class="writing-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 24px; border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); background: var(--bg-surface); text-decoration: none; gap: 32px; transition: border-color 150ms ease;">
+                <div>
+                  <div class="overline" style="margin-bottom: 10px;">{e.data.category ?? 'Writing'}</div>
+                  <h3 style="font: 500 15px/1.4 'Poppins', sans-serif; color: var(--text-bright); margin: 0 0 8px;">{e.data.title}</h3>
+                  <p style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); margin: 0;">{e.data.description}</p>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">{fmtDate(e.data.date)} · {e.data.readTime}</span>
+                  <i class="ph-bold ph-arrow-up-right" style="font-size: 13px; color: var(--text-disabled);"></i>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- All posts -->
+        <div>
+          <h2 style="font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 20px;">All posts</h2>
+          <div>
+            {sorted.map((e) => (
+              <a href={`/writing/${e.slug}`} class="post-row" style="display: grid; grid-template-columns: 180px 1fr 140px; gap: 24px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border-subtle); text-decoration: none; transition: padding 150ms ease;">
+                <span style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">{fmtDate(e.data.date)} · {e.data.readTime}</span>
+                <span style="font: 500 14px/20px 'Poppins', sans-serif; color: var(--text-bright);">{e.data.title}</span>
+                <span style="font: 500 10px/16px 'JetBrains Mono', monospace; color: var(--text-secondary); letter-spacing: 0.06em; text-transform: uppercase; text-align: right;">{e.data.category ?? ''}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <ContactCTA />
+      <Footer />
+    </main>
+
+  </div>
+
+</Layout>
+
+<style>
+  .writing-card:hover { border-color: var(--border-default) !important; }
+  .writing-card:hover i { color: var(--text-accent) !important; }
+  .post-row:hover span:nth-child(2) { color: var(--text-accent) !important; }
+</style>

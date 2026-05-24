@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import ThemeToggle from '../components/ThemeToggle';
 import Contact from '../components/Contact';
 import '../styles/global.css';
+import Footer from '../components/Footer.astro';
 
 const SITE = {
   email: 'joycedoan.007@gmail.com',
@@ -32,4 +33,5 @@ const SITE = {
   </header>
 
   <Contact client:load email={SITE.email} socials={SITE.socials} />
+  <Footer />
 </Layout>

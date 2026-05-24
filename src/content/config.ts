@@ -9,6 +9,7 @@ const work = defineCollection({
     skills: z.array(z.string()),   // e.g. ["BRANDING", "WEB DESIGN", "WEBFLOW"]
     role: z.string().default('UI/UX Designer'),
     year: z.string().optional(),
+    category: z.string().optional(),
     hasImage: z.boolean().default(false),
     order: z.number().default(99),
   }),
@@ -23,6 +24,7 @@ const writing = defineCollection({
     description: z.string(),
     notionUrl: z.string().url(),
     category: z.string().optional(),
+    popular: z.boolean().optional(),
     tocGroups: z.array(z.object({
       label: z.string(),
       slugs: z.array(z.string()),

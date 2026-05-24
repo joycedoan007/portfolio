@@ -2,6 +2,9 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import ThemeToggle from '../../components/ThemeToggle';
+import ContactCTA from '../../components/ContactCTA.astro';
+import Footer from '../../components/Footer.astro';
+import WorkSidebar from '../../components/WorkSidebar.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('work');
@@ -24,34 +27,22 @@ const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
 <Layout title={`${w.title} — Joyce Doan`} description={w.description}>
   <header style="position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg-page) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle);">
-    <div style="max-width: 100%; padding: 0 48px; height: 48px; display: flex; align-items: center; justify-content: space-between;">
-      <a href="/work" style="display: inline-flex; align-items: center; gap: 10px; text-decoration: none;">
-        <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+    <div style="max-width: 100%; padding: 0 24px; height: 48px; display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0;">
+        <a href="/" style="display: inline-flex; text-decoration: none;">
+          <img src="/logo.svg" alt="Joyce Doan" height="18" style="display: block; filter: var(--logo-filter);" />
+        </a>
         <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
-        <span style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary);">Work</span>
+        <a href="/work" style="font: 400 13px/20px 'Poppins', sans-serif; color: var(--text-secondary); text-decoration: none;">Work</a>
         <span style="font: 400 12px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">/</span>
         <span style="font: 500 13px/20px 'Poppins', sans-serif; color: var(--text-bright);">{w.title}</span>
-      </a>
+      </div>
       <ThemeToggle client:load />
     </div>
   </header>
 
   <div style="display: grid; grid-template-columns: 220px 1fr 200px; min-height: calc(100vh - 48px);">
-    <!-- Left sidebar -->
-    <aside style="position: sticky; top: 48px; height: calc(100vh - 48px); overflow-y: auto; border-right: 1px solid var(--border-subtle); padding: 32px 0;">
-      <div style="padding: 0 20px 12px; font: 500 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled); letter-spacing: 0.08em; text-transform: uppercase;">Projects</div>
-      <nav>
-        {sorted.map((e, i) => {
-          const isActive = e.slug === entry.slug;
-          return (
-            <a href={`/work/${e.slug}`} style={`display: block; padding: 7px 20px; text-decoration: none; border-left: 2px solid ${isActive ? 'var(--primary-500)' : 'transparent'}; background: ${isActive ? 'var(--bg-surface)' : 'transparent'};`} class={isActive ? '' : 'sidebar-link'}>
-              <div style={`font: ${isActive ? '500' : '400'} 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled); margin-bottom: 2px;`}>{String(i + 1).padStart(2, '0')}</div>
-              <div style={`font: ${isActive ? '500' : '400'} 12px/18px 'Poppins', sans-serif; color: ${isActive ? 'var(--text-bright)' : 'var(--text-secondary)'};`}>{e.data.title}</div>
-            </a>
-          );
-        })}
-      </nav>
-    </aside>
+    <WorkSidebar entries={sorted} activeSlug={entry.slug} />
 
     <!-- Main -->
     <main style="min-width: 0; padding: 56px 72px 120px;">
@@ -95,6 +86,8 @@ const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
       </div>
     </aside>
   </div>
+  <ContactCTA />
+  <Footer />
 </Layout>
 
 <style is:global>

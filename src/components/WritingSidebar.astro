@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'writing'>[];
+  activeSlug?: string;
+}
+
+const { entries, activeSlug = '' } = Astro.props;
+
+function fmtDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+const categoryOrder: string[] = [];
+const grouped: Record<string, typeof entries> = {};
+for (const e of entries) {
+  const cat = e.data.category ?? 'Other';
+  if (!grouped[cat]) { grouped[cat] = []; categoryOrder.push(cat); }
+  grouped[cat].push(e);
+}
+---
+
+<aside style="position: sticky; top: 48px; height: calc(100vh - 48px); overflow-y: auto; border-right: 1px solid var(--border-subtle); padding: 32px 0;">
+  <nav>
+    {categoryOrder.map((cat) => {
+      const hasActive = grouped[cat].some((e) => e.slug === activeSlug);
+      // On index page (no activeSlug) expand all; on article page expand only active category
+      const isExpanded = !activeSlug || hasActive;
+      const catId = cat.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      return (
+        <>
+          <button
+            data-cat-toggle={catId}
+            aria-expanded={isExpanded ? 'true' : 'false'}
+            style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: none; border: none; cursor: pointer; text-align: left;"
+            class="cat-toggle"
+          >
+            <span style="font: 500 12px/16px 'Poppins', sans-serif; color: var(--text-secondary); letter-spacing: 0.01em;">{cat}</span>
+            <svg
+              data-cat-chevron={catId}
+              width="12" height="12" viewBox="0 0 12 12" fill="none"
+              style={`flex-shrink: 0; transition: transform 200ms ease; transform: rotate(${isExpanded ? '90deg' : '0deg'});`}
+            >
+              <path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div
+            data-cat-items={catId}
+            style={`overflow: hidden; transition: max-height 200ms ease; max-height: ${isExpanded ? '600px' : '0px'};`}
+          >
+            {grouped[cat].map((e) => {
+              const isActive = e.slug === activeSlug;
+              return (
+                <a
+                  href={`/writing/${e.slug}`}
+                  style={`display: block; padding: 7px 20px; text-decoration: none; border-left: 2px solid ${isActive ? 'var(--primary-500)' : 'transparent'}; background: ${isActive ? 'var(--bg-surface)' : 'transparent'}; transition: background 150ms ease;`}
+                  class={isActive ? '' : 'sidebar-link'}
+                >
+                  <div style={`font: ${isActive ? '500' : '400'} 13px/18px 'Poppins', sans-serif; color: ${isActive ? 'var(--text-bright)' : 'var(--text-secondary)'}; margin-bottom: 2px; transition: color 150ms ease;`}>
+                    {e.data.title}
+                  </div>
+                  <div style="font: 400 11px/16px 'JetBrains Mono', monospace; color: var(--text-disabled);">
+                    {fmtDate(e.data.date)} · {e.data.readTime}
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </>
+      );
+    })}
+  </nav>
+</aside>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-cat-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.catToggle!;
+      const items = document.querySelector<HTMLElement>(`[data-cat-items="${id}"]`);
+      const chevron = document.querySelector<SVGElement>(`[data-cat-chevron="${id}"]`);
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (items) items.style.maxHeight = isOpen ? '0px' : '600px';
+      if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(90deg)';
+    });
+  });
+</script>
+
+<style>
+  .cat-toggle:hover span { color: var(--text-bright) !important; }
+  .sidebar-link:hover { background: var(--bg-surface) !important; }
+  .sidebar-link:hover > div:first-child { color: var(--text-bright) !important; }
+</style>

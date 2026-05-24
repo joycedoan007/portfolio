@@ -7,7 +7,7 @@ role: UI/UX Designer
 year: "2024"
 hasImage: true
 order: 15
-category: Website
+category: "Web Design"
 ---
 
 ## Overview
