@@ -7,5 +7,5 @@ role: UI/UX Designer
 category: "Web Design"
 year: "2025"
 hasImage: false
-order: 2
+order: 7
 ---

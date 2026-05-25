@@ -1,6 +1,6 @@
 ---
 title: How I Extract a Real Design System from Any Website
-date: "2026-01-15"
+date: "2026-05-01"
 readTime: 8 min read
 description: Most AI tools can generate UI. The problem is they don't know your design system. Here's how to fix that.
 notionUrl: https://cumbersome-mailbox-4e9.notion.site/How-I-Extract-a-Real-Design-System-from-Any-Website-and-Use-It-to-Generate-Consistent-UI-with-AI-360a5487c1e880b5be06f1104fffc780
@@ -217,10 +217,3 @@ And then letting AI execute.
 
 Once you give it the system: everything gets 10x better.
 
----
-
-Feel free to leave a comment or reach out to [joycedoan007](https://www.linkedin.com/in/joycedoan007/) directly if you have any questions.
-
-Learn more:
-- [The real problem isn't tokens. It's sync.](https://www.linkedin.com/posts/joycedoan007_aiindesign-claudeai-generativeai-activity-7457836583107469312-OzKo)
-- [Token-Efficient Design Context](https://www.linkedin.com/posts/joycedoan007_designsystems-figma-aiindesign-activity-7453122506229645313-yAcx)

@@ -1,6 +1,6 @@
 ---
 title: Token-Efficient Design Context
-date: "2025-05-25"
+date: "2026-04-01"
 readTime: 10 min read
 description: A one-time Figma extraction workflow that turns your design system into a reusable local file — so AI tools stop burning tokens reading the same design over and over.
 notionUrl: https://cumbersome-mailbox-4e9.notion.site/Token-Efficient-Design-Context-34ca5487c1e880a9bb87d279e489fd39
@@ -439,10 +439,3 @@ Only redo this if:
 
 Otherwise: do NOT reconnect to Figma, do NOT re-feed raw design, reuse existing design system. This is the key to avoiding token waste.
 
----
-
-Feel free to leave a comment or reach out to [joycedoan007](https://www.linkedin.com/in/joycedoan007/) directly if you have any questions.
-
-Learn more:
-- [The real problem isn't tokens. It's sync.](https://www.linkedin.com/posts/joycedoan007_aiindesign-claudeai-generativeai-activity-7457836583107469312-OzKo)
-- [How I Extract a Real Design System from Any Website](https://www.linkedin.com/feed/update/urn:li:activity:7460794426869682176/)

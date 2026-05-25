@@ -7,5 +7,5 @@ role: UI/UX Designer
 category: "Product Design"
 year: "2022"
 hasImage: false
-order: 13
+order: 6
 ---

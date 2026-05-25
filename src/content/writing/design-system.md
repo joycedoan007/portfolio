@@ -1,6 +1,6 @@
 ---
 title: Design System Markdown Template
-date: "2025-06-10"
+date: "2026-03-01"
 readTime: 14 min read
 description: A practical template for documenting UI components, styles, and guidelines — from color tokens to component rules.
 notionUrl: https://joycedoan.notion.site/design-system-template
